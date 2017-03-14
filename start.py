@@ -1,6 +1,9 @@
 import flask
 import json
 
+import datetime
+import pytz
+
 from two1.wallet import Wallet
 from two1.bitserv.flask import Payment
 
@@ -64,12 +67,14 @@ def get_city_time(city_name, country_code=None, state=None):
         # TODO: better error handler
         return 'Could not find city specified', 400
 
-    return flask.jsonify(city)
+    # Filter out unneeded attributes
+    city_attrs = ['timezone', 'name', 'countrycode', 'state']
+    city_res = {k: v for k, v in city.items() if k in city_attrs}
 
+    # Calc local time
+    city_res['localtime'] = datetime.datetime.now(pytz.timezone(city['timezone'])).isoformat()
 
-@app.route('/hello')
-def hello():
-    return 'Hello, world'
+    return flask.jsonify(city_res)
 
 
 if __name__ == "__main__":
