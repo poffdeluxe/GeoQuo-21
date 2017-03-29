@@ -21,7 +21,7 @@ TWO1_WALLET_MNEMONIC = os.environ.get("TWO1_WALLET_MNEMONIC")
 TWO1_USERNAME = os.environ.get("TWO1_USERNAME")
 
 wallet = Two1Wallet.import_from_mnemonic(mnemonic=TWO1_WALLET_MNEMONIC)
-payment = Payment(app, wallet)
+payment = Payment(app, wallet, username=TWO1_USERNAME)
 
 cities_by_name = {}
 
