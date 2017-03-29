@@ -72,7 +72,7 @@ def get_city(city_name, country_code=None, state=None):
 @app.route('/<city_name>')
 @app.route('/<city_name>/<country_code>')
 @app.route('/<city_name>/<country_code>/<state>')
-@payment.required(5000)
+@payment.required(1000)
 def get_city_time(city_name, country_code=None, state=None):
     city = get_city(city_name, country_code=country_code, state=state)
 
