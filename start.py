@@ -5,11 +5,11 @@ import json
 import datetime
 import pytz
 
-from two1.wallet import Wallet
-from two1.bitserv.flask import Payment
+#from two1.wallet import Wallet
+#from two1.bitserv.flask import Payment
 
 app = flask.Flask(__name__)
-payment = Payment(app, Wallet())
+#payment = Payment(app, Wallet())
 
 cities_by_name = {}
 
