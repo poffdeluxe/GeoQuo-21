@@ -1,3 +1,4 @@
+import sys
 import flask
 import json
 
@@ -56,9 +57,9 @@ def get_city(city_name, country_code=None, state=None):
     return max(filtered_city_array, key=lambda c: c['population'])
 
 
-@app.route('/time/<city_name>')
-@app.route('/time/<city_name>/<country_code>')
-@app.route('/time/<city_name>/<country_code>/<state>')
+@app.route('/<city_name>')
+@app.route('/<city_name>/<country_code>')
+@app.route('/<city_name>/<country_code>/<state>')
 #@payment.required(5000)
 def get_city_time(city_name, country_code=None, state=None):
     city = get_city(city_name, country_code=country_code, state=state)
@@ -80,4 +81,8 @@ def get_city_time(city_name, country_code=None, state=None):
 if __name__ == "__main__":
     load_cities()
 
-    app.run(host="::", port=5000)
+    port = 5000
+    if len(sys.argv) > 1:
+        port = sys.argv[1]
+
+    app.run(host="::", port=port)
