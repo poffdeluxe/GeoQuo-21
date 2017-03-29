@@ -1,1 +1,1 @@
-web: python3 start.py $PORT
+web: python3 start.py 80
