@@ -1,15 +1,22 @@
 import sys
+import os
 import flask
 import json
 
 import datetime
 import pytz
 
-#from two1.wallet import Wallet
-#from two1.bitserv.flask import Payment
+from two1.wallet import Wallet
+from two1.bitserv.flask import Payment
 
 app = flask.Flask(__name__)
-#payment = Payment(app, Wallet())
+
+# Setup 21.co
+TWO1_WALLET_MNEMONIC = os.environ.get("TWO1_WALLET_MNEMONIC")
+TWO1_USERNAME = os.environ.get("TWO1_USERNAME")
+
+wallet = Wallet.import_from_mnemonic(mnemonic=TWO1_WALLET_MNEMONIC)
+payment = Payment(app, wallet)
 
 cities_by_name = {}
 
