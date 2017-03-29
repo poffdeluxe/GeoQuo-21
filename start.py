@@ -2,20 +2,25 @@ import sys
 import os
 import flask
 import json
+import dotenv
 
 import datetime
 import pytz
 
-from two1.wallet import Wallet
+from two1.wallet import Two1Wallet
 from two1.bitserv.flask import Payment
 
 app = flask.Flask(__name__)
+
+# load environment variables from .env
+if os.path.isfile('.env'):
+    dotenv.load_dotenv('.env')
 
 # Setup 21.co
 TWO1_WALLET_MNEMONIC = os.environ.get("TWO1_WALLET_MNEMONIC")
 TWO1_USERNAME = os.environ.get("TWO1_USERNAME")
 
-wallet = Wallet.import_from_mnemonic(mnemonic=TWO1_WALLET_MNEMONIC)
+wallet = Two1Wallet.import_from_mnemonic(mnemonic=TWO1_WALLET_MNEMONIC)
 payment = Payment(app, wallet)
 
 cities_by_name = {}
@@ -67,7 +72,7 @@ def get_city(city_name, country_code=None, state=None):
 @app.route('/<city_name>')
 @app.route('/<city_name>/<country_code>')
 @app.route('/<city_name>/<country_code>/<state>')
-#@payment.required(5000)
+@payment.required(5000)
 def get_city_time(city_name, country_code=None, state=None):
     city = get_city(city_name, country_code=country_code, state=state)
 
